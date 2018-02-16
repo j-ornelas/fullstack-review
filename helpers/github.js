@@ -1,7 +1,7 @@
 const request = require('request');
 const config = require('../config.js');
 
-let getReposByUsername = (username) => {
+let getReposByUsername = (callback, username) => {
   // TODO - Use the request module to request repos for a specific
   // user from the github API
 
@@ -15,11 +15,20 @@ let getReposByUsername = (username) => {
     }
   };
 
-  request.get(options)
-  .on('response', function(response) {
-    console.log('Status Code', response.statusCode)
-    // console.log(response)
-    console.log('response recieved!')
+  request.get(options, function(error, response, body){
+    console.log('statuscode:', response.statusCode)
+    var data = JSON.parse(body)
+    var repoArr = [];
+    // makes an array and pushes the repo names and repo urls
+    // for each one.
+    for (var i = 0; i < data.length; i++){
+      var temp = [];
+      temp.push(data[i].name, data[i].url)
+      arr.push(temp)
+    }
+
+    console.log(arr)
+    callback(repoArr, username)
   })
 
 

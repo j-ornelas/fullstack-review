@@ -3,6 +3,11 @@ let app = express();
 var bodyParser = require('body-parser');
 var getReposByUsername = require('./../helpers/github.js');
 
+var sendToDB = function(testData, username){
+  // console.log(testData)
+  console.log(username)
+}
+
 app.use(bodyParser.json())
 app.use(express.static(__dirname + '/../client/dist'));
 
@@ -16,7 +21,7 @@ app.post('/repos', function (req, res) {
 
 
   //req.body.data is the input/query from the client
-  getReposByUsername.getReposByUsername(req.body.data)
+  getReposByUsername.getReposByUsername(sendToDB, req.body.data)
 
 
 
