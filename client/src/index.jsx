@@ -15,7 +15,7 @@ class App extends React.Component {
 
   search (term) {
     // console.log(`${term} was searched`);
-    console.log('search clicked!')
+    console.log('searched')
     // TODO
   }
 
@@ -23,7 +23,7 @@ class App extends React.Component {
     return (<div>
       <h1>Github Fetcher</h1>
       <RepoList repos={this.state.repos}/>
-      <Search search={this.search.bind(this)}/>
+      <Search onSearch={this.search.bind(this)}/>
     </div>)
   }
 }
