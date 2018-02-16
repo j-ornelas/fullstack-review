@@ -2,10 +2,12 @@ const express = require('express');
 let app = express();
 var bodyParser = require('body-parser');
 var getReposByUsername = require('./../helpers/github.js');
+var save = require('./../database/index.js');
 
 var sendToDB = function(testData, username){
   // console.log(testData)
   console.log(username)
+  save.save(testData, username)
 }
 
 app.use(bodyParser.json())
