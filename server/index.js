@@ -11,7 +11,7 @@ app.post('/repos', function (req, res) {
   // and get the repo information from the github API, then
   // save the repo information in the database
   console.log('req body', req.body)
-  res.send('test')
+  res.send(req.body.data)
 
 });
 
