@@ -13,7 +13,10 @@ class App extends React.Component {
       repos: []
     }
     this.updateState = this.updateState.bind(this);
+    this.getDataFromServer(this.updateState)
   }
+
+
 
   updateState(dataFromServer){
     this.setState({repos:dataFromServer})
