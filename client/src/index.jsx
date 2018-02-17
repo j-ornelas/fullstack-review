@@ -9,14 +9,39 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      lastSearch: "",
+      mostRecent: [],
       repos: []
     }
     this.updateState = this.updateState.bind(this);
+    this.addNewFilesToState = this.addNewFilesToState.bind(this);
     this.getDataFromServer(this.updateState)
   }
 
+  seeMostRecentRepos(repos){
+    var reps = repos
+    reps.sort(function(a,b){
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    });
 
+    var recentReps = [];
+    for (var i = 0; i < 25; i++){
+      if (reps[i] === undefined){
+        continue;
+      } else {
+        recentReps.push(reps[i])
+      }
+    }
+    this.setState({mostRecent:recentReps})
+  }
+
+  addNewFilesToState(dataFromServer){
+    var repos = this.state.repos
+    for (var i = 0; i < dataFromServer.length; i++){
+      repos.push(dataFromServer[i])
+      console.log(repos)
+    }
+    this.setState({repos:repos})
+  }
 
   updateState(dataFromServer){
     this.setState({repos:dataFromServer})
@@ -53,6 +78,8 @@ class App extends React.Component {
         console.log('POST success!', data);
         // this.setState({lastSearch: data})
         callback(data)
+        // this.getDataFromServer(this.updateState)
+
       },
       error: function (data) {
         // See: https://developer.mozilla.org/en-US/docs/Web/API/console.error
@@ -65,9 +92,10 @@ class App extends React.Component {
     return (
     <div>
       <h1>Github Fetcher</h1>
-      <RepoList repos={this.state.repos}/>
-      <Search onSearch={this.search.bind(this, this.updateState)}/>
+      <RepoList mostRecent={this.state.mostRecent} repos={this.state.repos}/>
+      <Search onSearch={this.search.bind(this, this.addNewFilesToState)}/>
       <button onClick={this.getDataFromServer.bind(this, this.updateState)} >Fetch Data Test Button</button>
+      <button onClick={this.seeMostRecentRepos.bind(this, this.state.repos)} > See most recent repos</button>
     </div>)
   }
 }

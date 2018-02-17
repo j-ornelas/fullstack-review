@@ -25,12 +25,13 @@ app.post('/repos', function (req, res) {
 
 
   //req.body.data is the input/query from the client
+
   getReposByUsername.getReposByUsername(sendToDB, req.body.data)
 
 
 
   //req.send needs to eventually send the data from github
-  res.send(req.body.data)
+  res.send()
 
 });
 
