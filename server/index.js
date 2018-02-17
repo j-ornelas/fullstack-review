@@ -3,8 +3,10 @@ let app = express();
 var bodyParser = require('body-parser');
 var getReposByUsername = require('./../helpers/github.js');
 var save = require('./../database/index.js');
+var fetch = require('./../database/index.js');
+var db = require('./../database/index.js');
 
-var sendToDB = function(testData, username){
+var sendToDB = function(username, testData){
   // console.log(testData)
   console.log(username)
   save.save(testData, username)
@@ -18,7 +20,7 @@ app.post('/repos', function (req, res) {
   // This route should take the github username provided
   // and get the repo information from the github API, then
   // save the repo information in the database
-  console.log('req-body', req.body.data)
+  console.log('req-body', req.body)
 
 
 
@@ -35,6 +37,13 @@ app.post('/repos', function (req, res) {
 app.get('/repos', function (req, res) {
   // TODO - your code here!
   // This route should send back the top 25 repos
+  // var dataFromDB = fetch.fetch()
+  // console.log('datafromDB', dataFromDB)
+  // res.send(dataFromDB)
+  db.Repo.find({}, function(err, data){
+    // console.log('DATA HERE', data)
+    res.send(data)
+  })
 });
 
 let port = 1128;
