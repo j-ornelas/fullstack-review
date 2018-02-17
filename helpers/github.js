@@ -23,7 +23,7 @@ let getReposByUsername = (callback, username) => {
     // for each one.
     for (var i = 0; i < data.length; i++){
       var temp = [];
-      temp.push(data[i].name, data[i].url)
+      temp.push(data[i].name, data[i].html_url, data[i].owner.html_url, data[i].watchers)
       repoArr.push(temp)
     }
 

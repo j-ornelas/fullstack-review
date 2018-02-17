@@ -7,7 +7,9 @@ let repoSchema = mongoose.Schema({
     username: String,
     repoName: String,
     repoUrl: String,
-    createdAt: Date
+    createdAt: Date,
+    watching: Number,
+    ownerUrl: String
 });
 
 let Repo = mongoose.model('Repo', repoSchema);
@@ -22,6 +24,8 @@ let save = (username, repoArr) => {
       username: username,
       repoName: repoArr[i][0],
       repoUrl: repoArr[i][1],
+      ownerUrl: repoArr[i][2],
+      watching: repoArr[i][3],
       createdAt: new Date()
     })
     repoEntry.save(function(err){

@@ -9,7 +9,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      mostRecent: [],
+      mostWatched: [],
       repos: []
     }
     this.updateState = this.updateState.bind(this);
@@ -20,7 +20,7 @@ class App extends React.Component {
   seeMostRecentRepos(repos){
     var reps = repos
     reps.sort(function(a,b){
-      return new Date(b.createdAt) - new Date(a.createdAt);
+      return b.watching - a.watching;
     });
 
     var recentReps = [];
@@ -31,7 +31,7 @@ class App extends React.Component {
         recentReps.push(reps[i])
       }
     }
-    this.setState({mostRecent:recentReps})
+    this.setState({mostWatched:recentReps})
   }
 
   addNewFilesToState(dataFromServer){
@@ -92,10 +92,10 @@ class App extends React.Component {
     return (
     <div>
       <h1>Github Fetcher</h1>
-      <RepoList mostRecent={this.state.mostRecent} repos={this.state.repos}/>
+      <RepoList mostRecent={this.state.mostWatched} repos={this.state.repos}/>
       <Search onSearch={this.search.bind(this, this.addNewFilesToState)}/>
       <button onClick={this.getDataFromServer.bind(this, this.updateState)} >Fetch Data Test Button</button>
-      <button onClick={this.seeMostRecentRepos.bind(this, this.state.repos)} > See most recent repos</button>
+      <button onClick={this.seeMostRecentRepos.bind(this, this.state.repos)} > See most watched repos</button>
     </div>)
   }
 }
